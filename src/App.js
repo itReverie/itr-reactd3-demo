@@ -14,7 +14,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <BarGraph width={500} height={500} />
+        <BarGraph width={500} height={500} color={'#ffabcb'} />
       </div>
     );
   }
