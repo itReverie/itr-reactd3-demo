@@ -3,6 +3,8 @@ import { letterFrequency } from '@vx/mock-data';
 import { Group } from '@vx/group';
 import { Bar } from '@vx/shape';
 import { scaleLinear, scaleBand } from '@vx/scale';
+import PropTypes from 'prop-types';
+
 
 // We'll use some mock data from `@vx/mock-data` for this.
 const data = letterFrequency;
@@ -37,7 +39,7 @@ const xPoint = compose(xScale, x);
 const yPoint = compose(yScale, y);
 
 // Finally we'll embed it all in an SVG
-function BarGraph(props) {
+const BarGraph = ({width, height}) => {
   return (
     <svg width={width} height={height}>
       {data.map((d, i) => {
@@ -57,5 +59,10 @@ function BarGraph(props) {
     </svg>
   );
 }
+
+BarGraph.propTypes = {
+  width : PropTypes.number,
+  height : PropTypes.number
+};
 
 export default BarGraph;
