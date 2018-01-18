@@ -5,7 +5,6 @@ import { Bar } from '@vx/shape';
 import { scaleLinear, scaleBand } from '@vx/scale';
 import PropTypes from 'prop-types';
 
-
 // We'll use some mock data from `@vx/mock-data` for this.
 const data = letterFrequency;
 
@@ -53,6 +52,7 @@ const BarGraph = ({width, height, color}) => {
               width={xScale.bandwidth()}
               fill={color}
             />
+
           </Group>
         );
       })}

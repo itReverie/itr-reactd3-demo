@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@vx/annotation": "0.0.153",
+    "@vx/axis": "0.0.153",
+    "@vx/curve": "0.0.153",
+    "@vx/gradient": "0.0.153",
+    "@vx/grid": "0.0.153",
     "@vx/group": "0.0.153",
     "@vx/mock-data": "0.0.153",
     "@vx/scale": "0.0.153",
