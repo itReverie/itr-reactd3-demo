@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@vx/grid';
 import { Group } from '@vx/group';
 import { curveBasis } from '@vx/curve';
-import { GradientPinkBlue } from '@vx/gradient';
+import { GradientOrangeRed } from '@vx/gradient';
 import { genDateValue } from '@vx/mock-data';
 import { AxisLeft, AxisBottom } from '@vx/axis';
 import { AreaClosed, LinePath, Line } from '@vx/shape';
@@ -58,20 +58,7 @@ const data = genDateValue(20);
 
   return (
     <svg width={width} height={height}>
-    <GradientPinkBlue
-      id="linear"
-      vertical={false}
-      fromOpacity={0.8}
-      toOpacity={0.3}
-    />
-      <rect
-        x={0}
-        y={0}
-        width={width}
-        height={height}
-        fill="#ffffff"
-        rx={14}
-      />
+
 
       <Grid
         top={margin.top}
@@ -84,29 +71,6 @@ const data = genDateValue(20);
         numTicksRows={numTicksForHeight(height)}
         numTicksColumns={numTicksForWidth(width)}
       />
-      <Group top={margin.top} left={margin.left}>
-        <AreaClosed
-          data={data}
-          xScale={xScale}
-          yScale={yScale}
-          x={x}
-          y={y}
-          strokeWidth={2}
-          stroke={'transparent'}
-          fill={'url(#linear)'}
-          curve={curveBasis}
-        />
-        <LinePath
-          data={data}
-          xScale={xScale}
-          yScale={yScale}
-          x={x}
-          y={y}
-          stroke={"url('#linear')"}
-          strokeWidth={2}
-          curve={curveBasis}
-        />
-      </Group>
       <AxisLeft
         top={margin.top}
         left={margin.left}
@@ -115,15 +79,15 @@ const data = genDateValue(20);
         numTicks={numTicksForHeight(height)}
         label="value"
         labelProps={{
-          fill: '#8e205f',
+          fill: '#000000',
           textAnchor: 'middle',
           fontSize: 9,
           fontFamily: 'Arial',
         }}
         stroke="#1b1a1e"
-        tickStroke="#8e205f"
+        tickStroke="#000000"
         tickLabelProps={(value, index) => ({
-          fill: '#8e205f',
+          fill: '#000000',
           textAnchor: 'end',
           fontSize: 10,
           fontFamily: 'Arial',
@@ -141,7 +105,7 @@ const data = genDateValue(20);
         {props => {
           const tickLabelSize = 10;
           const tickRotate = 45;
-          const tickColor = '#8e205f';
+          const tickColor = '#000000';
           const axisCenter =
             (props.axisToPoint.x - props.axisFromPoint.x) / 2;
           return (
