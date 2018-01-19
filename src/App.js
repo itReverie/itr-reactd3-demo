@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import BarGraph from './components/BarGraph';
-import Axis from './components/Axis';
+import AreaClosedGraph from './components/AreaClosedGraph';
 import './App.css';
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <BarGraph width={500} height={500} color={'#ffabcb'} />
-        <Axis width={500} height={500} margin={{left:20, top:20, right:0, bottom:75}} />
+        <AreaClosedGraph width={800} height={500} margin={{left:70, top:20, right:70, bottom:75}} />
 
       </div>
     );

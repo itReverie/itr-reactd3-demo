@@ -11,13 +11,11 @@ import { extent, max } from 'd3-array';
 
 
 
-const Axis =  ({ width, height, margin }) => {
+const AreaClosedGraph =  ({ width, height, margin }) => {
   if (width < 10) return null;
 
 const data = genDateValue(20);
-// width=500;
-// height=500;
-// margin=10;
+
   // accessors
   const x = d => d.date;
   const y = d => d.value;
@@ -40,42 +38,32 @@ const data = genDateValue(20);
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
 
-  // scales
+  // scales. it seems that it's the available space to draw
   const xScale = scaleTime({
-    range: [0, xMax],
+    range: [0, xMax], //Space in X (Width)= base in the max of length left after right and left margin
     domain: extent(data, x),
   });
   const yScale = scaleLinear({
-    range: [yMax, 0],
+    range: [yMax, 0], //Space in Y (Height)= base in the max of length left after right and left margin
     domain: [0, max(data, y)],
     nice: true,
   });
 
   // scale tick formats
-  console.log("tick formatttttttt",yScale.tickFormat);
+  console.log("xxxxScale",xScale);
+  console.log("yyyyScale",yScale);
   const yFormat = yScale.tickFormat ? yScale.tickFormat() : "100";//identity
   const xFormat = xScale.tickFormat ? xScale.tickFormat() : "100";//identity
 
-  // <AxisBottom
-  //      scale={xScale}
-  //      top={yMax}
-  //      stroke="#a44afe"
-  //      tickStroke="#a44afe"
-  //      tickLabelProps={(value, index) => ({
-  //        fill: '#a44afe',
-  //        fontSize: 11,
-  //        textAnchor: 'middle',
-  //      })}
-  //    />
 
   return (
     <svg width={width} height={height}>
-      <GradientOrangeRed
-        id="linear"
-        vertical={false}
-        fromOpacity={0.8}
-        toOpacity={0.3}
-      />
+    <GradientOrangeRed
+      id="linear"
+      vertical={false}
+      fromOpacity={0.8}
+      toOpacity={0.3}
+    />
       <rect
         x={0}
         y={0}
@@ -128,7 +116,7 @@ const data = genDateValue(20);
         labelProps={{
           fill: '#8e205f',
           textAnchor: 'middle',
-          fontSize: 12,
+          fontSize: 9,
           fontFamily: 'Arial',
         }}
         stroke="#1b1a1e"
@@ -197,4 +185,4 @@ const data = genDateValue(20);
   );
 };
 
-export default Axis;
+export default AreaClosedGraph;
