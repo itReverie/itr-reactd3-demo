@@ -1,17 +1,15 @@
 import React from 'react';
 import { Grid } from '@vx/grid';
 import { Group } from '@vx/group';
-import { curveBasis } from '@vx/curve';
-import { GradientOrangeRed } from '@vx/gradient';
 import { genDateValue } from '@vx/mock-data';
-import { AxisLeft, AxisBottom } from '@vx/axis';
-import { AreaClosed, LinePath, Line } from '@vx/shape';
+import { AxisLeft, AxisBottom, AxisRight , AxisTop} from '@vx/axis';
+import { Line } from '@vx/shape';
 import { scaleTime, scaleLinear } from '@vx/scale';
 import { extent, max } from 'd3-array';
 
 
 
-const AreaClosedGraph =  ({ width, height, margin }) => {
+const Axis =  ({ width, height, margin }) => {
   if (width < 10) return null;
 
 const data = genDateValue(20);
@@ -146,8 +144,47 @@ const data = genDateValue(20);
           );
         }}
       </AxisBottom>
+
+      <AxisRight
+        top={margin.top}
+        left={ width-margin.right}
+        scale={yScale}
+        hideZero
+        numTicks={numTicksForHeight(height)}
+        stroke="#33cc33"
+        tickStroke="#33cc33"
+        hideTicks={true}
+        tickLabelProps={(value, index) => ({
+          fill: '#000000',
+          textAnchor: 'end',
+          fontSize: 0,
+          fontFamily: 'Arial',
+          dx: '-0.25em',
+          dy: '0.25em',
+        })}
+      />
+
+      <AxisTop
+        top={margin.top}
+        left={margin.right}
+        scale={yScale}
+        hideZero
+        numTicks={numTicksForHeight(height)}
+        stroke="#33cc33"
+        tickStroke="#33cc33"
+        hideTicks={true}
+        tickLabelProps={(value, index) => ({
+          fill: '#000000',
+          textAnchor: 'end',
+          fontSize: 0,
+          fontFamily: 'Arial',
+          dx: '-0.25em',
+          dy: '0.25em',
+        })}
+      />
+
     </svg>
   );
 };
 
-export default AreaClosedGraph;
+export default Axis;
