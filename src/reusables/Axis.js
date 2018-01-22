@@ -1,7 +1,7 @@
 import React from 'react';
+import { Point } from '@vx/point';
 import { Grid } from '@vx/grid';
 import { Group } from '@vx/group';
-import { genDateValue } from '@vx/mock-data';
 import { AxisLeft, AxisBottom, AxisRight , AxisTop} from '@vx/axis';
 import { Line } from '@vx/shape';
 import { scaleTime, scaleLinear } from '@vx/scale';
@@ -9,13 +9,13 @@ import { extent, max } from 'd3-array';
 
 
 
-const Axis =  ({ width, height, margin }) => {
+const Axis =  ({ width, height, margin , data}) => {
   if (width < 10) return null;
 
-const data = genDateValue(20);
+console.log(data);
 
   // accessors
-  const x = d => d.date;
+  const x = d => new Date (d.date);
   const y = d => d.value;
 
   // responsive utils for axis ticks
@@ -48,8 +48,6 @@ const data = genDateValue(20);
   });
 
   // scale tick formats
-  console.log("xxxxScale",xScale);
-  console.log("yyyyScale",yScale);
   const yFormat = yScale.tickFormat ? yScale.tickFormat() : "100";//identity
   const xFormat = xScale.tickFormat ? xScale.tickFormat() : "100";//identity
 
@@ -57,18 +55,6 @@ const data = genDateValue(20);
   return (
     <svg width={width} height={height}>
 
-
-      <Grid
-        top={margin.top}
-        left={margin.left}
-        xScale={xScale}
-        yScale={yScale}
-        stroke="rgba(142, 32, 95, 0.9)"
-        width={xMax}
-        height={yMax}
-        numTicksRows={numTicksForHeight(height)}
-        numTicksColumns={numTicksForWidth(width)}
-      />
       <AxisLeft
         top={margin.top}
         left={margin.left}
@@ -97,6 +83,9 @@ const data = genDateValue(20);
         top={height - margin.bottom}
         left={margin.left}
         scale={xScale}
+        stroke="#33cc33"
+        tickStroke="#33cc33"
+        hideAxisLine={false}
         numTicks={numTicksForWidth(width)}
         label="time"
       >
@@ -107,7 +96,7 @@ const data = genDateValue(20);
           const axisCenter =
             (props.axisToPoint.x - props.axisFromPoint.x) / 2;
           return (
-            <g className="my-custom-bottom-axis">
+            <g >
               {props.ticks.map((tick, i) => {
                 const tickX = tick.to.x;
                 const tickY =
@@ -117,11 +106,17 @@ const data = genDateValue(20);
                     key={`vx-tick-${tick.value}-${i}`}
                     className={'vx-axis-tick'}
                   >
-                    <Line
-                      from={tick.from}
-                      to={tick.to}
-                      stroke={tickColor}
-                    />
+                  <Line
+                    from={tick.from}
+                    to={tick.to}
+                    stroke={tickColor}
+                  />
+
+                    {/*<Line
+                     from={new Point({ x: margin.left, y: height-margin.bottom })}
+                     left={new Point({ x: xMax, y: yMax })}
+                     />
+                     */}
                     <text
                       transform={`translate(${tickX}, ${tickY}) rotate(${tickRotate})`}
                       fontSize={tickLabelSize}
@@ -147,7 +142,7 @@ const data = genDateValue(20);
 
       <AxisRight
         top={margin.top}
-        left={ width-margin.right}
+        left={width-margin.right}
         scale={yScale}
         hideZero
         numTicks={numTicksForHeight(height)}
@@ -166,8 +161,8 @@ const data = genDateValue(20);
 
       <AxisTop
         top={margin.top}
-        left={margin.right}
-        scale={yScale}
+        left={margin.left}
+        scale={xScale}
         hideZero
         numTicks={numTicksForHeight(height)}
         stroke="#33cc33"

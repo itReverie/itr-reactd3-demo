@@ -3,21 +3,22 @@ import { Grid } from '@vx/grid';
 import { Group } from '@vx/group';
 import { curveBasis } from '@vx/curve';
 import { GradientPinkBlue } from '@vx/gradient';
-import { genDateValue } from '@vx/mock-data';
+// import { genDateValue } from '@vx/mock-data';
 import { AxisLeft, AxisBottom } from '@vx/axis';
 import { AreaClosed, LinePath, Line } from '@vx/shape';
 import { scaleTime, scaleLinear } from '@vx/scale';
 import { extent, max } from 'd3-array';
+import Axis from '../reusables/Axis';
 
 
-
-const AreaClosedGraph =  ({ width, height, margin }) => {
+const AreaClosedGraph =  ({ width, height, margin , data }) => {
   if (width < 10) return null;
 
-const data = genDateValue(20);
+// const data = genDateValue(20);
+// console.log(data);
 
   // accessors
-  const x = d => d.date;
+  const x = d =>  new Date(d.date);
   const y = d => d.value;
 
   // responsive utils for axis ticks
@@ -50,8 +51,6 @@ const data = genDateValue(20);
   });
 
   // scale tick formats
-  console.log("xxxxScale",xScale);
-  console.log("yyyyScale",yScale);
   const yFormat = yScale.tickFormat ? yScale.tickFormat() : "100";//identity
   const xFormat = xScale.tickFormat ? xScale.tickFormat() : "100";//identity
 
@@ -107,81 +106,9 @@ const data = genDateValue(20);
           curve={curveBasis}
         />
       </Group>
-      <AxisLeft
-        top={margin.top}
-        left={margin.left}
-        scale={yScale}
-        hideZero
-        numTicks={numTicksForHeight(height)}
-        label="value"
-        labelProps={{
-          fill: '#8e205f',
-          textAnchor: 'middle',
-          fontSize: 9,
-          fontFamily: 'Arial',
-        }}
-        stroke="#1b1a1e"
-        tickStroke="#8e205f"
-        tickLabelProps={(value, index) => ({
-          fill: '#8e205f',
-          textAnchor: 'end',
-          fontSize: 10,
-          fontFamily: 'Arial',
-          dx: '-0.25em',
-          dy: '0.25em',
-        })}
-      />
-      <AxisBottom
-        top={height - margin.bottom}
-        left={margin.left}
-        scale={xScale}
-        numTicks={numTicksForWidth(width)}
-        label="time"
-      >
-        {props => {
-          const tickLabelSize = 10;
-          const tickRotate = 45;
-          const tickColor = '#8e205f';
-          const axisCenter =
-            (props.axisToPoint.x - props.axisFromPoint.x) / 2;
-          return (
-            <g className="my-custom-bottom-axis">
-              {props.ticks.map((tick, i) => {
-                const tickX = tick.to.x;
-                const tickY =
-                  tick.to.y + tickLabelSize + props.tickLength;
-                return (
-                  <Group
-                    key={`vx-tick-${tick.value}-${i}`}
-                    className={'vx-axis-tick'}
-                  >
-                    <Line
-                      from={tick.from}
-                      to={tick.to}
-                      stroke={tickColor}
-                    />
-                    <text
-                      transform={`translate(${tickX}, ${tickY}) rotate(${tickRotate})`}
-                      fontSize={tickLabelSize}
-                      textAnchor="middle"
-                      fill={tickColor}
-                    >
-                      {tick.formattedValue}
-                    </text>
-                  </Group>
-                );
-              })}
-              <text
-                textAnchor="middle"
-                transform={`translate(${axisCenter}, 50)`}
-                fontSize="8"
-              >
-                {props.label}
-              </text>
-            </g>
-          );
-        }}
-      </AxisBottom>
+
+
+  <Axis width={800} height={500} margin={{left:70, top:20, right:70, bottom:75}} data={data} />
     </svg>
   );
 };
