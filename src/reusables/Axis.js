@@ -4,7 +4,7 @@ import { Grid } from '@vx/grid';
 import { Group } from '@vx/group';
 import { AxisLeft, AxisBottom, AxisRight , AxisTop} from '@vx/axis';
 import { Line } from '@vx/shape';
-import { scaleTime, scaleLinear } from '@vx/scale';
+import { scaleBand, scaleTime, scaleLinear } from '@vx/scale';
 import { extent, max } from 'd3-array';
 
 
@@ -12,11 +12,9 @@ import { extent, max } from 'd3-array';
 const Axis =  ({ width, height, margin , data}) => {
   if (width < 10) return null;
 
-console.log(data);
-
   // accessors
-  const x = d => new Date (d.date);
-  const y = d => d.value;
+  const x = d => d.name;
+  const y = d => d.uv;
 
   // responsive utils for axis ticks
   function numTicksForHeight(height) {
@@ -36,11 +34,25 @@ console.log(data);
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
 
+
+
+
   // scales. it seems that it's the available space to draw
-  const xScale = scaleTime({
-    range: [0, xMax], //Space in X (Width)= base in the max of length left after right and left margin
-    domain: extent(data, x),
-  });
+  // const xScale = scaleTime({
+  //   range: [0, xMax], //Space in X (Width)= base in the max of length left after right and left margin
+  //   domain: extent(data, x),
+  //});
+  const xScale = scaleBand({
+      rangeRound: [0, xMax],
+      domain: data.map(x),
+      padding: 0.4,
+      nice: true,
+    });
+
+
+
+
+
   const yScale = scaleLinear({
     range: [yMax, 0], //Space in Y (Height)= base in the max of length left after right and left margin
     domain: [0, max(data, y)],
